@@ -35,7 +35,19 @@ react-native init AwesomeProject
 cd AwesomeProject
 react-native run-android
 
-nhấp 2 lần R/ lắc để Refresh
+nhấp 2 lần R/ lắc thiet bi để Refresh
+
+### Cach 2
+
+react-native start
+
+tren may tinh: 
+cmd/ipconfig
+xem IPv4 Address
+
+tren thiet bi:
+Menu/ Dev Settings/ Debug server host & port for device/ 
+Nhap IPv4:8081
 
 ## 6. Debug:
 
