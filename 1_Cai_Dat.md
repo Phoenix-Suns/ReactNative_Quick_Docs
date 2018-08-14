@@ -53,3 +53,16 @@ Nhap IPv4:8081
 
 phải chỉnh URL thành locahost mới chạy
 http://localhost:8081/debugger-ui/
+
+## Hạ phiên bản 0.56 xuống 0.55.4
+
+react-native init AwesomeProject
+cd AwesomeProject
+react-native run-android
+npm uninstall react-native
+npm install --save react-native@0.55.4
+react-native run-android
+npm install --save babel-core@latest babel-loader@latest
+npm uninstall --save babel-preset-react-native
+npm install --save babel-preset-react-native@4.0.0
+react-native run-android
