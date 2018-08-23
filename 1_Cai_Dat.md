@@ -41,13 +41,13 @@ nhấp 2 lần R/ lắc thiet bi để Refresh
 
 react-native start
 
-tren may tinh: 
+Tìm IP trên máy tính: 
 cmd/ipconfig
 xem IPv4 Address
 
-tren thiet bi:
-Menu/ Dev Settings/ Debug server host & port for device/ 
-Nhap IPv4:8081
+Trên Thiết bị (Android, iPhone):
+Trong app/ Menu/ Dev Settings/ Debug server host & port for device/ 
+Nhập IPv4:8081
 
 ## 6. Debug:
 
