@@ -16,10 +16,12 @@
             - [Cài đặt trong App](#cài-đặt-trong-app)
             - [Cài đặt Store](#cài-đặt-store)
             - [Component Gọi Action để sử dụng](#component-gọi-action-để-sử-dụng)
-            - [User Action](#user-action)
-            - [Producer](#producer)
-            - [Middleware - Observable: Get Data](#middleware---observable-get-data)
-        - [Đơn giản hóa reducer: REQUEST, SUCCESS, FAILURE](#đơn-giản-hóa-reducer-request-success-failure)
+            - [Action](#action)
+            - [Reducer](#reducer)
+            - [Middleware - Redux Observable: to Get Data](#middleware---redux-observable-to-get-data)
+    - [Redux - Thunk](#redux---thunk)
+        - [Store](#store-1)
+        - [Action](#action-1)
 
 <!-- /TOC -->
 
@@ -153,9 +155,9 @@ class TestScene extends React.Component {
 // Chuyển State Thành Props để render
 const mapStateToProps = (state) => {
     return {
-        loading: state.UserProducer.loading,
-        error: state.UserProducer.error,
-        data: state.UserProducer.data
+        loading: state.UserReducer.loading,
+        error: state.UserReducer.error,
+        data: state.UserReducer.data
     };
 }
   
@@ -168,39 +170,29 @@ function dispatchToProps(dispatch) {
 export default connect(mapStateToProps, dispatchToProps)(TestScene);
 ```
 
-#### User Action
+#### Action
 
 ```js
-// Tạo Action: Để lưu trữ giá trị luân chuyển
 //src/redux/UserAction.js
-import { FETCHING_USER_REQUEST, FETCHING_USER_SUCCESS, FETCHING_USER_FAILURE } from '../constants'
-
-export const getUserRequest = (search) => ({type: FETCHING_USER_REQUEST, payload: search})
-export const getUserSuccess = (data) => ({ type: FETCHING_USER_SUCCESS, payload: data })
-export const getUserFailure = (error) => ({ type: FETCHING_USER_FAILURE, payload: error, error: true })
-
-
-// src/Constants.js: lưu loại Action
-export const FETCHING_USER_REQUEST = 'FETCHING_DATA_REQUEST';
-export const FETCHING_USER_SUCCESS = 'FETCHING_DATA_SUCCESS';
-export const FETCHING_USER_FAILURE = 'FETCHING_DATA_FAILURE';
+// Tạo Action: Để lưu trữ giá trị luân chuyển
+// Redux Observable
+export const getUserRequest = (search) => ({type: 'FETCHING_USER_REQUEST', payload: search})
+export const getUserSuccess = (data) => ({ type: 'FETCHING_USER_SUCCESS', payload: data })
+export const getUserFailure = (error) => ({ type: 'FETCHING_USER_FAILURE', payload: error, error: true })
 ```
 
-#### Producer
+#### Reducer
 
 ```js
-// Tạo Producer chuyển đổi State
+// Tạo Reducer chuyển đổi State
 // Reducer để get Data
-export const UserProducer = (state = INITIAL_STATE, action) => {
+export const UserReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case FETCHING_USER_REQUEST:
-            console.log("FETCHING_USER_REQUEST");
+        case 'FETCHING_USER_REQUEST':
             return { ...state, loading: true  };
-        case FETCHING_USER_SUCCESS:
-            console.log("FETCHING_USER_SUCCESS");
+        case 'FETCHING_USER_SUCCESS':
             return { ...state, loading: false, data: action.payload };
-        case FETCHING_USER_FAILURE:
-        console.log("FETCHING_USER_FAILURE");
+        case 'FETCHING_USER_FAILURE':
             return { ...state, loading: false };
         default:
             return state;
@@ -211,23 +203,22 @@ export const UserProducer = (state = INITIAL_STATE, action) => {
 // File: src/redux/AppReducers.js
 ...
 import { combineReducers } from "redux";
-import { FETCHING_USER_REQUEST, FETCHING_USER_SUCCESS, FETCHING_USER_FAILURE } from "../constants";
 
 // Kết hợp nhiều reducers lại
 const AppReducers = () => {
     return combineReducers({
-        UserProducer,
+        UserReducer,
     })
 }
 export default AppReducers;
 ```
 
-#### Middleware - Observable: Get Data
+#### Middleware - Redux Observable: to Get Data
 
 ```js
-// Tạo Epic Middleware, để get Data,
 // File: src/redux/epic.js
-import { FETCHING_USER_REQUEST, FETCHING_USER_SUCCESS } from '../constants'
+// Tạo Epic (Middleware Observable), để get Data
+// Redux Observable
 import { getUserSuccess, getUserFailure } from './actions'
 import 'rxjs'
 import { Observable } from 'rxjs/Observable'
@@ -245,7 +236,7 @@ const fetchUser = (userName) => {
 
 const fetchUserEpic = action$ =>
   action$
-  .ofType(FETCHING_USER_REQUEST)
+  .ofType('FETCHING_USER_REQUEST')
   .debounceTime(500) // Delay
   .switchMap(action => Observable.from(fetchUser(action.payload))
     .map(response => getUserSuccess(response))
@@ -255,120 +246,59 @@ const fetchUserEpic = action$ =>
 export default fetchUserEpic;
 ```
 
+## Redux - Thunk
 
-### Đơn giản hóa reducer: REQUEST, SUCCESS, FAILURE
-
-https://medium.com/stashaway-engineering/react-redux-tips-better-way-to-handle-loading-flags-in-your-reducers-afda42a804c6
-
-
-**Mục đích rút gọn UserProducer**
-loại bỏ FETCHING_USER_REQUEST, FETCHING_USER_ERROR
+### Store
 
 ```js
-export const UserProducer = (state = INITIAL_STATE, action) => {  
-    switch(action.type) {
-        case FETCHING_USER_SUCCESS:
-            return { ...state, data: action.payload };
+...
+import { createStore, applyMiddleware, compose } from 'redux';
+import ReduxThunk from 'redux-thunk';
 
-        default:
-            return state;
-        }
-};
+const epicMiddleware = createEpicMiddleware(fetchUserEpic) // Redux Observable
+
+const configureStore = () => {
+  return createStore(
+    AppReducers(),
+    applyMiddleware(ReduxThunk) // Redux Thunk
+    //applyMiddleware(epicMiddleware) // Redux Observable
+    );
+}
+
+export default configureStore;
 ```
 
-Tạo loadingReducer để xử lý **loading state**, chỉ có Action "*_REQUEST" trả về {loading: true}
+### Action
 
 ```js
-// src/redux/api/loadingReducer.js
-const loadingReducer = (state = {}, action) => {
-    const { type } = action;
-    const matches = /(.*)_(REQUEST|SUCCESS|FAILURE)/.exec(type);
+// Redux Thunk
+export const getUserRequest = (search) => {
+    return(dispatch) => {
+        dispatch({ type: FETCHING_USER_REQUEST, payload: search });
 
-    // not a *_REQUEST / *_SUCCESS /  *_FAILURE actions, so we ignore them
-    if (!matches) return state;  
-    
-    const [, requestName, requestState] = matches;
-    return {
-      ...state,
-      // Store whether a request is happening at the moment or not
-      // e.g. will be true when receiving GET_TODOS_REQUEST
-      //      and false when receiving GET_TODOS_SUCCESS / GET_TODOS_FAILURE
-      [requestName]: requestState === 'REQUEST',
+        var url = `https://api.github.com/users/${search}`;
+        return request = fetch(url, {
+            method: 'GET',
+            headers: "{ 'Accept': 'application/json', 'Content-Type': 'application/json' }"
+            })
+            .then(response => // Return Promise
+                response.json().then( data => 
+                    userSuccess(dispatch, data)
+                )
+            )
+            .catch(error => userFailure(dispatch, error));
     };
 };
-export default loadingReducer;
 
-
-// src/redux/AppReducers.js
-const AppReducers = () => {
-    return combineReducers({
-        ...
-        UserProducer,
-        loading: loadingReducer,
-        error: errorReducer,    //Sẽ làm sau
-    })
+const userSuccess = (dispatch, response) => { 
+    dispatch ({ type: FETCHING_USER_SUCCESS, payload: response });
+}
+const userFailure = (dispatch, error) => {
+    dispatch ({ type: FETCHING_USER_FAILURE, payload: error, error: true })
 }
 ```
 
-**Tạo createLoadingSelector:** 
-convert loading value trả về, hiển thị trong View
-
-```js
-// src/redux/selector.js
-// Actions: Init Parameter, State: pass parameter
-export const createLoadingSelector = (actions) => (state) => {
-    // returns true only when all actions is not loading
-    return actions.some(action => state.loading[action]);
-};
-
-// Sử dụng trong Component:
-// src/TestScene.js
-const loadingSelector = createLoadingSelector(['FETCHING_DATA']);
-const errorSelector = createErrorMessageSelector(['FETCHING_DATA']);
-
-const mapStateToProps = (state) => {
-    var result = {
-        loading: loadingSelector(state),    // Convert state thành loading
-        error: errorSelector(state),        // Convert error thành error, thực hiện sau
-        data: state.UserProducer.data
-    };
-    return result;
-}
-```
-
-**Áp dụng với Error State**
-
-```js
-// src/redux/api/errorReducer.js
-const errorReducer = (state = {}, action) => {
-    const { type, payload } = action;
-    const matches = /(.*)_(REQUEST|FAILURE)/.exec(type);
-  
-    // not a *_REQUEST / *_FAILURE actions, so we ignore them
-    if (!matches) return state;
-  
-    const [, requestName, requestState] = matches;
-    return {
-      ...state,
-      // Store errorMessage
-      // e.g. stores errorMessage when receiving GET_TODOS_FAILURE
-      //      else clear errorMessage when receiving GET_TODOS_REQUEST
-      [requestName]: requestState === 'FAILURE' ? payload : '',
-    };
-  };
-export default errorReducer;
-
-
-// src/redux/api/selectors.js
-export const createErrorMessageSelector = (actions) => (state) => {
-    // returns the first error messages for actions
-    // * We assume when any request fails on a page that
-    //   requires multiple API calls, we shows the first error
-
-    const errors = actions.map(action => state.error[action]);
-    if (errors && errors[0]) {
-        return errors[0];
-    }
-    return '';
-  };
-```
+---
+**Copy:**
+https://redux.js.org/basics/exampletodolist
+https://insights.innovatube.com/redux-th%E1%BA%ADt-l%C3%A0-%C4%91%C6%A1n-gi%E1%BA%A3n-ph%E1%BA%A7n-cu%E1%BB%91i-4155b1cfed03
