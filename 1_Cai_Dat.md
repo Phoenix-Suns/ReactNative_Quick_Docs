@@ -66,3 +66,16 @@ npm install --save babel-core@latest babel-loader@latest
 npm uninstall --save babel-preset-react-native
 npm install --save babel-preset-react-native@4.0.0
 react-native run-android
+
+## build Android APK File
+
+### fix lỗi: Unable to load script from assets index.android.bundle on windows
+
+**FIX:**
+https://stackoverflow.com/questions/44446523/unable-to-load-script-from-assets-index-android-bundle-on-windows
+
+1. (in project directory) mkdir android/app/src/main/assets
+2. react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
+3. react-native run-android
+
+### Qua android studio build

@@ -22,6 +22,7 @@
     - [Redux - Thunk](#redux---thunk)
         - [Store](#store-1)
         - [Action](#action-1)
+    - [Call Action Outside Component](#call-action-outside-component)
 
 <!-- /TOC -->
 
@@ -91,7 +92,7 @@ class App extends Component {
 
   render() {
     return (
-      <Provider store={configureStore()}>
+      <Provider store={AppStore()}>
         <TestScene />
       </Provider>
     );
@@ -103,7 +104,7 @@ export default App;
 #### Cài đặt Store
 
 ```js
-// Tạo Store: src/redux/configureStore.js
+// Tạo Store: src/redux/AppStore.js
 import { createStore, applyMiddleware, compose } from 'redux'
 import { createEpicMiddleware } from 'redux-observable'
 import { retry } from 'rxjs/operator/retry';
@@ -113,13 +114,13 @@ import fetchUserEpic from './epic'
 // Kết hợp nhiều Middleware lại
 const epicMiddleware = createEpicMiddleware(fetchUserEpic); // sẽ Tạo sau
 
-const configureStore = () => {
+const AppStore = () => {
   return createStore(
     AppReducers(),  // Sẽ tạo sau
     applyMiddleware(epicMiddleware)
     )
 }
-export default configureStore;
+export default AppStore;
 ```
 
 #### Component Gọi Action để sử dụng
@@ -257,7 +258,7 @@ import ReduxThunk from 'redux-thunk';
 
 const epicMiddleware = createEpicMiddleware(fetchUserEpic) // Redux Observable
 
-const configureStore = () => {
+const AppStore = () => {
   return createStore(
     AppReducers(),
     applyMiddleware(ReduxThunk) // Redux Thunk
@@ -265,7 +266,7 @@ const configureStore = () => {
     );
 }
 
-export default configureStore;
+export default AppStore;
 ```
 
 ### Action
@@ -296,6 +297,12 @@ const userSuccess = (dispatch, response) => {
 const userFailure = (dispatch, error) => {
     dispatch ({ type: FETCHING_USER_FAILURE, payload: error, error: true })
 }
+```
+
+## Call Action Outside Component
+
+```java
+AppStore.dispatch(Action(params));
 ```
 
 ---

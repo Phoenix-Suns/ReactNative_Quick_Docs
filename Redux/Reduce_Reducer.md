@@ -15,6 +15,7 @@ https://medium.com/stashaway-engineering/react-redux-tips-better-way-to-handle-l
 
 
 ## Mục đích rút gọn UserProducer
+
 loại bỏ FETCHING_USER_REQUEST, FETCHING_USER_ERROR
 
 Từ:
@@ -51,6 +52,7 @@ export const UserProducer = (state = INITIAL_STATE, action) => {
 ## Thực hiện
 
 ### Tạo loadingReducer: xử lý **loading state** 
+
 Chỉ có Action "*_REQUEST" trả về {loading: true}
 
 ```js
@@ -95,10 +97,11 @@ export const createLoadingSelector = (actions) => (state) => {
     return actions.some(action => state.loading[action]);
 };
 
+
 // Sử dụng trong Component:
 // src/TestScene.js
-const loadingSelector = createLoadingSelector(['FETCHING_DATA']);
-const errorSelector = createErrorMessageSelector(['FETCHING_DATA']);
+const loadingSelector = createLoadingSelector(['FETCHING_USER']);
+const errorSelector = createErrorMessageSelector(['FETCHING_USER']);
 
 const mapStateToProps = (state) => {
     var result = {
