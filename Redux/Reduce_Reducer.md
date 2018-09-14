@@ -90,7 +90,7 @@ const AppReducers = () => {
 ### Tạo **createLoadingSelector**: convert loading state trả về, hiển thị trong View
 
 ```js
-// src/redux/selector.js
+// src/redux/selectors.js
 // Actions: Init Parameter, State: pass parameter
 export const createLoadingSelector = (actions) => (state) => {
     // returns true only when all actions is not loading
