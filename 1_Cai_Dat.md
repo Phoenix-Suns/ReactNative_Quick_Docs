@@ -79,33 +79,3 @@ https://stackoverflow.com/questions/44446523/unable-to-load-script-from-assets-i
 3. react-native run-android
 
 ### Qua android studio build
-
-## Cài ESLIN - Check JS Syntax
-
-npm install --save-dev babel-eslint eslint-config-airbnb-base eslint-plugin-react eslint-plugin-react-native
-
-file: .eslintrc
-
-```json
-{
-  "parser": "babel-eslint",
-  "plugins": [
-    "react",
-    "react-native"
-  ],
-  "parserOptions": {
-    "ecmaFeatures": {
-        "jsx": true,
-        "modules": true
-    }
-  },
-  "extends" : [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "airbnb-base"
-  ],
-  "rules" : {
-    "arrow-body-style" : 'warn'
-  }
-}
-```

@@ -25,15 +25,26 @@ Restart your editor
 Paste this into your .eslintrc.json:
 and remove my comments which will cause the JSON to blow up
 
+```json
 {
     "env": {
-        "node": true, // this is the best starting point
-        "browser": true, // for react web
-        "es6": true // enables es6 features
+        "node": true,
+        "browser": true,
+        "es6": true
     },
-    "parser": "babel-eslint", // needed to make babel stuff work properly
-    "extends": "airbnb",
+    "parser": "babel-eslint",
+    "extends": [
+        "airbnb"
+    ],
+    "plugins": [
+        "react",
+        "react-native",
+        "babel",
+        "flowtype",
+        "jsx-a11y"
+    ],
     "rules": {
-        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+        ...
     }
 }
+```
