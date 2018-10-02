@@ -256,13 +256,13 @@ export default fetchUserEpic;
 import { createStore, applyMiddleware, compose } from 'redux';
 import ReduxThunk from 'redux-thunk';
 
-const epicMiddleware = createEpicMiddleware(fetchUserEpic) // Redux Observable
+// const epicMiddleware = createEpicMiddleware(fetchUserEpic) // Redux Observable
 
 const AppStore = () => {
   return createStore(
     AppReducers(),
     applyMiddleware(ReduxThunk) // Redux Thunk
-    //applyMiddleware(epicMiddleware) // Redux Observable
+    // applyMiddleware(epicMiddleware) // Redux Observable
     );
 }
 

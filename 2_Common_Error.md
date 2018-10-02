@@ -59,3 +59,7 @@ npm install --save babel-core@latest babel-loader@latest
 npm uninstall --save babel-preset-react-native
 npm install --save babel-preset-react-native@4.0.0
 react-native run-android
+
+## Unable to resolve "@babel/runtime/helpers/builtin/interopRequireDefault"
+
+npm add @babel/runtime

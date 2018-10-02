@@ -23,4 +23,5 @@ componentWillUnmount
 
 ---
 **Tham Khảo**
-https://medium.com/@baphemot/understanding-reactjs-component-life-cycle-823a640b3e8d
+- https://medium.com/@baphemot/understanding-reactjs-component-life-cycle-823a640b3e8d
+- https://viblo.asia/p/vong-doi-cua-mot-react-component-RQqKLMRzZ7z
