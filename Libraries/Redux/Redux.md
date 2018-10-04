@@ -20,9 +20,11 @@
             - [Reducer](#reducer)
             - [Middleware - Redux Observable: to Get Data](#middleware---redux-observable-to-get-data)
     - [Redux - Thunk](#redux---thunk)
+        - [Intall](#intall)
         - [Store](#store-1)
         - [Action](#action-1)
     - [Call Action Outside Component](#call-action-outside-component)
+    - [Apply Multiple MiddleWare - Nhiều MiddleWare](#apply-multiple-middleware---nhiều-middleware)
 
 <!-- /TOC -->
 
@@ -249,6 +251,10 @@ export default fetchUserEpic;
 
 ## Redux - Thunk
 
+### Intall
+
+npm install --save redux-thunk
+
 ### Store
 
 ```js
@@ -303,6 +309,41 @@ const userFailure = (dispatch, error) => {
 
 ```java
 AppStore.dispatch(Action(params));
+```
+
+## Apply Multiple MiddleWare - Nhiều MiddleWare
+
+```js
+// Store
+import { createStore, applyMiddleware, compose } from 'redux';
+import { createEpicMiddleware } from 'redux-observable';
+import ReduxThunk from 'redux-thunk';
+import AppEpics from './AppEpics';
+import AppReducers from './AppReducers';
+
+const epicMiddleware = createEpicMiddleware();
+
+const AppStore = () => {
+  const store = createStore(
+    AppReducers,
+    applyMiddleware(ReduxThunk, epicMiddleware),
+  );
+
+  epicMiddleware.apply(AppEpics);
+
+  return store;
+};
+
+export default AppStore;
+```
+
+```js
+// AppEpics
+import { combineEpics } from 'redux-observable';
+
+export default combineEpics(
+    // Epics here
+);
 ```
 
 ---
