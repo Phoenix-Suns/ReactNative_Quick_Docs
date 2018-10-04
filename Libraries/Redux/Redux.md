@@ -329,7 +329,7 @@ const AppStore = () => {
     applyMiddleware(ReduxThunk, epicMiddleware),
   );
 
-  epicMiddleware.apply(AppEpics);
+  epicMiddleware.add(AppEpics);
 
   return store;
 };
