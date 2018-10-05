@@ -23,6 +23,10 @@
         - [Intall](#intall)
         - [Store](#store-1)
         - [Action](#action-1)
+    - [Redux Saga](#redux-saga)
+        - [Cài đặt](#cài-đặt-1)
+        - [Middleware Saga](#middleware-saga)
+        - [Store Setup](#store-setup)
     - [Call Action Outside Component](#call-action-outside-component)
     - [Apply Multiple MiddleWare - Nhiều MiddleWare](#apply-multiple-middleware---nhiều-middleware)
 
@@ -233,7 +237,8 @@ const fetchUser = (userName) => {
     method: 'GET',
     headers: "{ 'Accept': 'application/json', 'Content-Type': 'application/json' }"
   })
-  .then(response => response.json());
+  .then(response => response.json())
+  .catch(error => error);
   return request;
 }
 
@@ -250,6 +255,8 @@ export default fetchUserEpic;
 ```
 
 ## Redux - Thunk
+
+https://github.com/reduxjs/redux-thunk
 
 ### Intall
 
@@ -290,20 +297,84 @@ export const getUserRequest = (search) => {
             })
             .then(response => // Return Promise
                 response.json().then( data => 
-                    userSuccess(dispatch, data)
+                    dispatch(userSuccess(dispatch, data))
                 )
             )
-            .catch(error => userFailure(dispatch, error));
+            .catch(error => dispatch(userFailure(dispatch, error)));
     };
 };
+```
 
-const userSuccess = (dispatch, response) => { 
-    dispatch ({ type: FETCHING_USER_SUCCESS, payload: response });
+## Redux Saga
+
+https://redux-saga.js.org/docs/introduction/BeginnerTutorial.html
+https://github.com/redux-saga/redux-saga
+
+### Cài đặt
+
+```js
+$ npm install --save redux-saga
+// of
+$ yarn add redux-saga
+```
+
+### Middleware Saga
+
+```js
+// ========= rootSaga.js =========
+import { all } from 'redux-saga/effects';
+import { sagaAuthSignIn } from './saga/sagaAuthSignIn';
+
+export default function* AppSaga() {
+  yield all([
+    sagaAuthSignIn(),
+  ]);
 }
-const userFailure = (dispatch, error) => {
-    dispatch ({ type: FETCHING_USER_FAILURE, payload: error, error: true })
+
+// ======== Saga File ============
+import { call, put, takeEvery } from 'redux-saga/effects';
+
+export function* apiSignInEffect(action) {
+  try {
+    const response = yield call(fetchUser, action.payload);
+    yield put(fetchUser(action.payload));
+  } catch (e) {
+    yield put(getUserFailure(error));
+  }
+}
+
+// the 'watcher'
+export function* sagaSignIn() {
+  yield takeEvery('FETCHING_USER_REQUEST', apiSignInEffect);
 }
 ```
+
+### Store Setup
+
+```js
+// Combine Saga and Thunk
+import { createStore, applyMiddleware } from 'redux';
+import ReduxThunk from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
+import AppReducers from './AppReducers';
+import AppSaga from './AppSaga';
+
+const sagaMiddleware = createSagaMiddleware();
+
+function AppStore() {
+  const store = createStore(
+    AppReducers,
+    applyMiddleware(ReduxThunk, sagaMiddleware),
+  );
+
+  sagaMiddleware.run(AppSaga);
+
+  return store;
+}
+
+export default AppStore();
+```
+
 
 ## Call Action Outside Component
 
