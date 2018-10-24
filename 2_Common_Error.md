@@ -17,7 +17,7 @@ export const sendTextToDeviceReset = () => ({ type: ACTION_SEND_TEXT_TO_DEVICE_R
 ## Không kết nối với Debugger
 
 **Fix**
-Tắt debug, reload, Mở Debug lại
+Tắt debug, tắt app, reload, Mở Debug lại
 
 ## Unable to load script from assets index.android.bundle on windows
 
