@@ -69,6 +69,8 @@ react-native run-android
 
 ## build Android APK File
 
+https://stackoverflow.com/questions/35283959/build-and-install-unsigned-apk-on-device-without-the-development-server
+
 ### fix lỗi: Unable to load script from assets index.android.bundle on windows
 
 **FIX:**
