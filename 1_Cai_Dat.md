@@ -67,17 +67,36 @@ npm uninstall --save babel-preset-react-native
 npm install --save babel-preset-react-native@4.0.0
 react-native run-android
 
-## build Android APK File
+## Build Android APK File
 
-https://stackoverflow.com/questions/35283959/build-and-install-unsigned-apk-on-device-without-the-development-server
+### Cách 1: 
 
-### fix lỗi: Unable to load script from assets index.android.bundle on windows
+#### fix lỗi: Unable to load script from assets index.android.bundle on windows
 
 **FIX:**
 https://stackoverflow.com/questions/44446523/unable-to-load-script-from-assets-index-android-bundle-on-windows
 
-1. (in project directory) mkdir android/app/src/main/assets
-2. react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
-3. react-native run-android
+1. (in project directory) 
+> mkdir android/app/src/main/assets
+2. 
+> react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
+3. 
+> react-native run-android
+4.
+> Qua android studio build
 
-### Qua android studio build
+### Cách 2:
+
+https://stackoverflow.com/questions/35283959/build-and-install-unsigned-apk-on-device-without-the-development-server
+https://facebook.github.io/react-native/docs/signed-apk-android
+
+1. run: 
+> react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
+2. run:
+> cd android
+> gradlew assembleRelease
+3. run: (in project directory)
+> cd..
+> react-native run-android --variant=release
+4. Thư mục release APK: 
+> android\app\build\outputs\apk\release

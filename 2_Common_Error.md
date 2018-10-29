@@ -63,3 +63,13 @@ react-native run-android
 ## Unable to resolve "@babel/runtime/helpers/builtin/interopRequireDefault"
 
 npm add @babel/runtime
+
+## Khi chạy lệnh: react-native run-android --variant=release 
+**ERROR:** com.android.builder.testing.api.DeviceException: com.android.ddmlib.InstallException: INSTALL_FAILED_UPDATE_INCOMPATIBLE: Package com.pa_app_react_native signatures do not match the previously installed version; ignoring!
+
+**FIX:** Xóa app cũ trong máy android
+
+## Màn hình trắng:
+
+**ERROR:** Màn hình trắng khí debug, build, refresh
+**FIX:** Tắt app trong android, mở lại
