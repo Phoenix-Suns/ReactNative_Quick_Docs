@@ -95,7 +95,7 @@ https://facebook.github.io/react-native/docs/signed-apk-android
 2. run:
 > cd android
 > gradlew assembleRelease
-3. run: (in project directory)
+3. run android release test: (in project directory) - delete old app
 > cd..
 > react-native run-android --variant=release
 4. Thư mục release APK: 
