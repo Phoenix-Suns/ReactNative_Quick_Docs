@@ -100,3 +100,6 @@ https://facebook.github.io/react-native/docs/signed-apk-android
 > react-native run-android --variant=release
 4. Thư mục release APK: 
 > android\app\build\outputs\apk\release
+
+---
+
