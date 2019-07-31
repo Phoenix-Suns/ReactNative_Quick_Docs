@@ -17,13 +17,6 @@
       - [Action](#action-1)
       - [Reducer](#reducer)
       - [Middleware - Redux Observable: to Get Data](#middleware---redux-observable-to-get-data)
-  - [Redux - Thunk](#redux---thunk)
-    - [Intall](#intall)
-    - [Store](#store-1)
-    - [Action](#action-2)
-  - [Redux Saga](#redux-saga)
-    - [Cài đặt](#c%c3%a0i-%c4%91%e1%ba%b7t-1)
-    - [Middleware Saga](#middleware-saga)
     - [Store Setup](#store-setup)
   - [Call Action Outside Component](#call-action-outside-component)
   - [Apply Multiple MiddleWare - Nhiều MiddleWare](#apply-multiple-middleware---nhi%e1%bb%81u-middleware)
@@ -38,7 +31,7 @@
 
 ### Cách thức hoạt động
 
-![Redux Operation](../images/redux_operation.gif)
+![Redux Operation](redux_operation.gif)
 
 #### Action
 
@@ -248,101 +241,6 @@ const fetchUserEpic = action$ =>
 export default fetchUserEpic;
 ```
 
-## Redux - Thunk
-
-https://github.com/reduxjs/redux-thunk
-
-### Intall
-
-npm install --save redux-thunk
-
-### Store
-
-```js
-...
-import { createStore, applyMiddleware, compose } from 'redux';
-import ReduxThunk from 'redux-thunk';
-
-// const epicMiddleware = createEpicMiddleware(fetchUserEpic) // Redux Observable
-
-const AppStore = () => {
-  return createStore(
-    AppReducers(),
-    applyMiddleware(ReduxThunk) // Redux Thunk
-    // applyMiddleware(epicMiddleware) // Redux Observable
-    );
-}
-
-export default AppStore;
-```
-
-### Action
-
-```js
-// Redux Thunk
-export const getUserRequest = (search) => {
-    return(dispatch) => {
-        dispatch({ type: FETCHING_USER_REQUEST, payload: search });
-
-        var url = `https://api.github.com/users/${search}`;
-        return request = fetch(url, {
-            method: 'GET',
-            headers: "{ 'Accept': 'application/json', 'Content-Type': 'application/json' }"
-            })
-            .then(response => // Return Promise
-                response.json().then( data => 
-                    dispatch(userSuccess(dispatch, data))
-                )
-            )
-            .catch(error => dispatch(userFailure(dispatch, error)));
-    };
-};
-```
-
-## Redux Saga
-
-https://redux-saga.js.org/docs/introduction/BeginnerTutorial.html
-https://github.com/redux-saga/redux-saga
-
-### Cài đặt
-
-```js
-$ npm install --save redux-saga
-// of
-$ yarn add redux-saga
-```
-
-### Middleware Saga
-
-```js
-// ========= rootSaga.js =========
-import { all } from 'redux-saga/effects';
-import { sagaAuthSignIn } from './saga/sagaAuthSignIn';
-
-export default function* AppSaga() {
-  yield all([
-    sagaAuthSignIn(),
-  ]);
-}
-
-// ======== Saga File ============
-import { call, put, takeEvery } from 'redux-saga/effects';
-
-export function* apiSignInEffect(action) {
-  try {
-    const response = yield call(fetchUser, action.payload);
-    yield put(fetchUser(action.payload));
-  } catch (e) {
-    yield put(getUserFailure(error));
-  }
-}
-
-// the 'watcher'
-export function* sagaSignIn() {
-  yield takeEvery('FETCHING_USER_REQUEST', apiSignInEffect);
-}
-```
-
 ### Store Setup
 
 ```js
@@ -368,7 +266,6 @@ function AppStore() {
 
 export default AppStore();
 ```
-
 
 ## Call Action Outside Component
 
