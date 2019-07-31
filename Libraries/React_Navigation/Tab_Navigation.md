@@ -1,13 +1,13 @@
 # Tab Navigation
 
-**Warning: TabNavigator inside StackNavigator, can open Screen on Stack - this will open OUTSIDE TAB**
+**Warning: tạo TabNavigator trong StackNavigator, để mở Screen trong Stack - hiện bên ngoài TAB**
 
-https://reactnavigation.org/docs/en/tab-navigator.html
+<https://reactnavigation.org/docs/en/tab-navigator.html>
 
 ```js
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 
-export default createBottomTabNavigator({
+const RootStack = createBottomTabNavigator({
         /* ====== Multi Stack ====== */
         Home: HomeStack,
         Settings: SettingsStack,
@@ -35,6 +35,12 @@ export default createBottomTabNavigator({
         },
     }
 );
+
+export default class App extends React.Component {
+  render() {
+    return <RootStack />;
+  }
+}
 ```
 
 ## TabBar Press
@@ -49,10 +55,9 @@ navigationOptions: ({ navigation }) => ({
         const currRoute = navigation.state;
         
         if (currRoute.routeName === 'ScanProduct') {
-        // store.dispatch(updateCameraVisible(true)); // Call Action: Show Camera
-
+            // store.dispatch(updateCameraVisible(true)); // Call Action: Show Camera
         } else {
-        // store.dispatch(updateCameraVisible(false)); // Call Action: hide Camera
+            // store.dispatch(updateCameraVisible(false)); // Call Action: hide Camera
         }
 
         defaultHandler(); // action selected
@@ -74,3 +79,5 @@ tabBarOptions: {
   },
 }
 ```
+
+---

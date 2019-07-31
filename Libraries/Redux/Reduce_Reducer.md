@@ -1,18 +1,13 @@
 # Đơn giản hóa reducer: REQUEST, SUCCESS, FAILURE
 
-https://medium.com/stashaway-engineering/react-redux-tips-better-way-to-handle-loading-flags-in-your-reducers-afda42a804c6
+<https://medium.com/stashaway-engineering/react-redux-tips-better-way-to-handle-loading-flags-in-your-reducers-afda42a804c6>
 
-<!-- TOC -->
-
-- [Đơn giản hóa reducer: REQUEST, SUCCESS, FAILURE](#đơn-giản-hóa-reducer-request-success-failure)
-    - [Mục đích rút gọn UserProducer](#mục-đích-rút-gọn-userproducer)
-    - [Thực hiện](#thực-hiện)
-        - [Tạo loadingReducer: xử lý **loading state**](#tạo-loadingreducer-xử-lý-loading-state)
-        - [Tạo **createLoadingSelector**: convert loading state trả về, hiển thị trong View](#tạo-createloadingselector-convert-loading-state-trả-về-hiển-thị-trong-view)
-    - [Áp dụng với Error State](#áp-dụng-với-error-state)
-
-<!-- /TOC -->
-
+- [Đơn giản hóa reducer: REQUEST, SUCCESS, FAILURE](#%c4%90%c6%a1n-gi%e1%ba%a3n-h%c3%b3a-reducer-request-success-failure)
+  - [Mục đích rút gọn UserProducer](#m%e1%bb%a5c-%c4%91%c3%adch-r%c3%bat-g%e1%bb%8dn-userproducer)
+  - [Thực hiện](#th%e1%bb%b1c-hi%e1%bb%87n)
+    - [Tạo loadingReducer: xử lý **loading state**](#t%e1%ba%a1o-loadingreducer-x%e1%bb%ad-l%c3%bd-loading-state)
+    - [Tạo **createLoadingSelector**: convert loading state trả về, hiển thị trong View](#t%e1%ba%a1o-createloadingselector-convert-loading-state-tr%e1%ba%a3-v%e1%bb%81-hi%e1%bb%83n-th%e1%bb%8b-trong-view)
+  - [Áp dụng với Error State](#%c3%81p-d%e1%bb%a5ng-v%e1%bb%9bi-error-state)
 
 ## Mục đích rút gọn UserProducer
 

@@ -2,9 +2,8 @@
 
 ## Khái niệm cơ bản
 
-### Props
+### Props: Data truyền vào Component
 
-- là Dữ liệu truyền vào Component
 - Không thể thay đổi trong Component
 
 ![props](basic_1_props.png)
@@ -15,6 +14,7 @@
 import React, { Component } from 'react';
 import { AppRegistry, Text, View } from 'react-native';
 
+// Create Greeting (Show text)
 class Greeting extends Component {
   render() {
     return (
@@ -25,6 +25,7 @@ class Greeting extends Component {
   }
 }
 
+// Using Greeting (to show array text)
 export default class LotsOfGreetings extends Component {
   render() {
     // --- Gọi 3 component Greeting với tham số Name ---
@@ -42,14 +43,13 @@ export default class LotsOfGreetings extends Component {
 AppRegistry.registerComponent('AwesomeProject', () => LotsOfGreetings);
 ```
 
-### State
+### State: Data thay đổi trong Component
 
-- là Dữ liệu thay đổi trong Component
 - thường khởi tạo trong Construct
 - đổi data: setSate
   
 ```js
-// Tạo chữ chớp chớp
+// Tạo Component Blink (chữ chớp chớp)
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 
@@ -68,16 +68,21 @@ class Blink extends Component {
   state = { isShowingText: true };
 
   render() {
+    // hide Text
     if (!this.state.isShowingText) {
       return null;
     }
 
+    // show Text
     return (
       <Text>{this.props.text}</Text>
     );
   }
 }
+```
 
+```js
+// Using Component Blink
 export default class BlinkApp extends Component {
   render() {
     return (
@@ -119,10 +124,21 @@ export default class LotsOfStyles extends Component {
         <Text style={styles.bigBlue}>just bigBlue</Text>
         <Text style={[styles.bigBlue, styles.red]}>bigBlue, then red</Text>
         <Text style={[styles.red, styles.bigBlue]}>red, then bigBlue</Text>
+        <Text style={{color: 'green', fontSize: 30}}>green text</Text>
       </View>
     );
   }
 }
 ```
 
+- Note:
+  - Style trực tiếp: style={{color: 'green', fontSize: 30}}
+  - Gọi Style: style={[styles.bigBlue, styles.red]}
+
 ---
+
+## References
+
+- <https://facebook.github.io/react-native/docs/getting-started>
+- <https://viblo.asia/p/hoc-react-native-tu-co-ban-den-nang-cao-phan-2-khai-niem-co-ban-trong-react-native-va-1-so-chia-se-ca-nhan-RQqKLvN6l7z>
+  

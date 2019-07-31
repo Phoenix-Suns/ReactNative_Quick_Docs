@@ -1,36 +1,32 @@
 # Redux Observable
 
-<!-- TOC -->
-
 - [Redux Observable](#redux-observable)
-    - [Nguyên tắc](#nguyên-tắc)
-        - [3 nguyên tắc của Redux](#3-nguyên-tắc-của-redux)
-        - [Cách thức hoạt động](#cách-thức-hoạt-động)
-            - [Action:](#action)
-            - [Reducers](#reducers)
-            - [Store](#store)
-    - [Cài đặt](#cài-đặt)
-    - [Ví dụ](#ví-dụ)
-        - [Mô tả thư mục](#mô-tả-thư-mục)
-        - [Code](#code)
-            - [Cài đặt trong App](#cài-đặt-trong-app)
-            - [Cài đặt Store](#cài-đặt-store)
-            - [Component Gọi Action để sử dụng](#component-gọi-action-để-sử-dụng)
-            - [Action](#action)
-            - [Reducer](#reducer)
-            - [Middleware - Redux Observable: to Get Data](#middleware---redux-observable-to-get-data)
-    - [Redux - Thunk](#redux---thunk)
-        - [Intall](#intall)
-        - [Store](#store-1)
-        - [Action](#action-1)
-    - [Redux Saga](#redux-saga)
-        - [Cài đặt](#cài-đặt-1)
-        - [Middleware Saga](#middleware-saga)
-        - [Store Setup](#store-setup)
-    - [Call Action Outside Component](#call-action-outside-component)
-    - [Apply Multiple MiddleWare - Nhiều MiddleWare](#apply-multiple-middleware---nhiều-middleware)
-
-<!-- /TOC -->
+  - [Nguyên tắc](#nguy%c3%aan-t%e1%ba%afc)
+    - [3 nguyên tắc của Redux](#3-nguy%c3%aan-t%e1%ba%afc-c%e1%bb%a7a-redux)
+    - [Cách thức hoạt động](#c%c3%a1ch-th%e1%bb%a9c-ho%e1%ba%a1t-%c4%91%e1%bb%99ng)
+      - [Action](#action)
+      - [Reducers](#reducers)
+      - [Store](#store)
+  - [Cài đặt](#c%c3%a0i-%c4%91%e1%ba%b7t)
+  - [Ví dụ](#v%c3%ad-d%e1%bb%a5)
+    - [Mô tả thư mục](#m%c3%b4-t%e1%ba%a3-th%c6%b0-m%e1%bb%a5c)
+    - [Code](#code)
+      - [Cài đặt trong App](#c%c3%a0i-%c4%91%e1%ba%b7t-trong-app)
+      - [Cài đặt Store](#c%c3%a0i-%c4%91%e1%ba%b7t-store)
+      - [Component Gọi Action để sử dụng](#component-g%e1%bb%8di-action-%c4%91%e1%bb%83-s%e1%bb%ad-d%e1%bb%a5ng)
+      - [Action](#action-1)
+      - [Reducer](#reducer)
+      - [Middleware - Redux Observable: to Get Data](#middleware---redux-observable-to-get-data)
+  - [Redux - Thunk](#redux---thunk)
+    - [Intall](#intall)
+    - [Store](#store-1)
+    - [Action](#action-2)
+  - [Redux Saga](#redux-saga)
+    - [Cài đặt](#c%c3%a0i-%c4%91%e1%ba%b7t-1)
+    - [Middleware Saga](#middleware-saga)
+    - [Store Setup](#store-setup)
+  - [Call Action Outside Component](#call-action-outside-component)
+  - [Apply Multiple MiddleWare - Nhiều MiddleWare](#apply-multiple-middleware---nhi%e1%bb%81u-middleware)
 
 ## Nguyên tắc
 
@@ -44,12 +40,12 @@
 
 ![Redux Operation](../images/redux_operation.gif)
 
-#### Action: 
+#### Action
 
 Định nghĩa Giá trị được Luân chuyển, Mô tả hành động
 Mỗi action là 1 Fure Object, 2 thuộc tính:
 
-```
+```js
 {
   type: "KIEU_ACTION",
   payload: //tham số
@@ -60,9 +56,7 @@ Mỗi action là 1 Fure Object, 2 thuộc tính:
 
 Chuyển đổi giá trị, nhận vào State cũ + Action => Trả về State mới
 
-```
-(previousState, action) => newState
-```
+> (previousState, action) => newState
 
 #### Store
 

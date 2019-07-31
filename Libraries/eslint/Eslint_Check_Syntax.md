@@ -19,9 +19,11 @@ Select your options, pick JSON type (.eslintrc is the old filename based on my r
 Allow it to update newer versions and/or install packages if it asks
 
 ## Step 4
+
 Restart your editor
 
 ## Step 5
+
 Paste this into your .eslintrc.json:
 and remove my comments which will cause the JSON to blow up
 
@@ -48,3 +50,5 @@ and remove my comments which will cause the JSON to blow up
     }
 }
 ```
+
+---
