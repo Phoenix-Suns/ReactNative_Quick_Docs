@@ -1,6 +1,7 @@
 # Thư viện Điều hướng - React Navigation
 
 <https://reactnavigation.org/>
+<https://reactnavigation.org/docs/en/getting-started.html>
 
 - [Thư viện Điều hướng - React Navigation](#th%c6%b0-vi%e1%bb%87n-%c4%90i%e1%bb%81u-h%c6%b0%e1%bb%9bng---react-navigation)
   - [Setup](#setup)
@@ -19,6 +20,8 @@
 yarn add react-navigation
 or
 npm install --save react-navigation
+
+npm install react-native-gesture-handler react-native-reanimated
 
 ## Simple Start
 

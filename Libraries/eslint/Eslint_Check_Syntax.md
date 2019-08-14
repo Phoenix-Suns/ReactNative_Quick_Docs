@@ -12,6 +12,16 @@ Backup your eslintrc file in case you want to examine it.
 ## Step 3
 
 eslint --init
+(
+    How would you like to use ESLint?
+    To check syntax, find problems, and enforce code style
+
+    What type of modules does your project use?
+    CommonJS (require/exports)
+    
+    Which framework does your project use?
+    React
+)
 Select 'Use a popular style guide'
 Select Airbnb
 Select JSON
