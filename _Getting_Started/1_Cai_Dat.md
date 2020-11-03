@@ -30,6 +30,10 @@ npm install -g react-native-cli
 
 react-native init AwesomeProject
 
+## Setup trên Source cũ
+
+npm install --save react-native
+
 ## 5. Chạy ứng dụng
 
 cd AwesomeProject
